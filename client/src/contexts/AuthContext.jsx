@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Get API base URL from environment or use relative path
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -36,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
         email,
         password
       });
@@ -65,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const response = await axios.post('/api/auth/signup', {
+      const response = await axios.post(`${API_BASE_URL}/auth/signup`, {
         name,
         email,
         password

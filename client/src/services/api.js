@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-// Use relative path for development, absolute for production
-const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://your-vercel-app.vercel.app/api' 
-  : '/api';
+// Use environment variable or fallback to your Render backend
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://productmanager-ls9n.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -37,6 +35,7 @@ api.interceptors.response.use(
 
 export const productAPI = {
   getAll: () => api.get('/products'),
+  getById: (id) => api.get(`/products/${id}`),
   create: (productData) => api.post('/products', productData),
   update: (id, productData) => api.put(`/products/${id}`, productData),
   delete: (id) => api.delete(`/products/${id}`),
